@@ -12,8 +12,9 @@ PD['YEAR'] = PD['YEAR'].astype(str).str.extract('(\d+)').astype(float)
 PD['VOTES'] = pd.to_numeric(PD['VOTES'], errors='coerce')
 # Fill NaN values in 'VOTES' with the mean of their respective 'YEAR'
 PD['VOTES'] = PD.groupby('YEAR')['VOTES'].transform(lambda x: x.fillna(x.mean()))
+PD['VOTES'] = PD['VOTES'].fillna(PD['VOTES'].mean())
+PD=PD.dropna(subset=['YEAR'])
 PD['GENRE'] = PD['GENRE'].astype(str)
-
 # Now, you can fill NaN values in VOTES with the mean of their respective YEAR
 PD['RATING'] = pd.to_numeric(PD['RATING'], errors='coerce')
 PD['RATING'] = PD.groupby('GENRE')['RATING'].transform(lambda x: x.fillna(x.mean()))
