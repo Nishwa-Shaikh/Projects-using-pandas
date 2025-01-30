@@ -12,9 +12,16 @@ PD['YEAR'] = PD['YEAR'].astype(str).str.extract('(\d+)').astype(float)
 PD['VOTES'] = pd.to_numeric(PD['VOTES'], errors='coerce')
 # Fill NaN values in 'VOTES' with the mean of their respective 'YEAR'
 PD['VOTES'] = PD.groupby('YEAR')['VOTES'].transform(lambda x: x.fillna(x.mean()))
+PD['GENRE'] = PD['GENRE'].astype(str)
+
+# Now, you can fill NaN values in VOTES with the mean of their respective YEAR
+PD['RATING'] = pd.to_numeric(PD['RATING'], errors='coerce')
+PD['RATING'] = PD.groupby('GENRE')['RATING'].transform(lambda x: x.fillna(x.mean()))
+#For that group that is NaN
+PD['RATING'] = PD['RATING'].fillna(PD['RATING'].mean())
 # Save the refined data into a new CSV file
 save_file_path = "C:/Users/PMLS/Downloads/refined_movie_data.csv"
 PD.to_csv(save_file_path, index=False, encoding='utf-8')
 # Print the confirmation and the refined data
 print('Refined data saved to:', save_file_path)
-print(PD.head(40))
+print(PD)
