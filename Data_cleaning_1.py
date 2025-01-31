@@ -15,8 +15,12 @@ PD=PD.dropna(subset=['YEAR'])
 PD['GENRE'] = PD['GENRE'].astype(str)
 PD['RATING'] = pd.to_numeric(PD['RATING'], errors='coerce')
 PD['RATING'] = PD.groupby('GENRE')['RATING'].transform(lambda x: x.fillna(x.mean()))
+PD['MOVIES']=PD['MOVIES'].str.strip()
+PD['GENRE']=PD['GENRE'].str.strip()
+PD['ONE-LINE']=PD['ONE-LINE'].str.strip()
+PD['STARS']=PD['STARS'].str.strip()
 #For that group that is NaN
 PD['RATING'] = PD['RATING'].fillna(PD['RATING'].mean())
-save_file_path = "C:/Users/PMLS/Downloads/refined_movie_data.csv"
+save_file_path = "C:/Users/PMLS/Downloads/refined_movie_data_set.csv"
 PD.to_csv(save_file_path, index=False, encoding='utf-8')
 print(PD)
